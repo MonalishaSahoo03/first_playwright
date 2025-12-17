@@ -4,7 +4,6 @@ test('find a product from flipkart and click on it',async({page})=>{
      const fash = await page.locator("//div[@aria-label='Fashion']");
      await fash.hover();
 
-     const men = await page.locator("//a[contains(text(),'Men Footwear')]");
-      await men.click();
+     await page.locator("//a[contains(text(),'Men Footwear')]").click();
 
      })
