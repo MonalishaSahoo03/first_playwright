@@ -7,7 +7,4 @@ test('find a product from flipkart and click on it',async({page})=>{
      const men = await page.locator("//a[contains(text(),'Men Footwear')]");
       await men.click();
 
-     
-     
-
-})
+     })
