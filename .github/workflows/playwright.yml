@@ -1,30 +1,28 @@
-add a new file : 
->>>git  git status
-	On branch main
-	Your branch is up to date with 'origin/main'.
-
-	Changes to be committed:
-  	(use "git restore --staged <file>..." to unstage)
-
-	Changes not staged for commit:
-  	(use "git add <file>..." to update what will be committed
-
->>> git add .github/workflows/playwright.yml
-
->>>> git status
-	Changes to be committed:
- 	(use "git restore --staged <file>..." to unstage)
-        modified:   .github/workflows/playwright.yml
-        new file:   tests/Naviagate.spec.ts
-
->>> git commit -m "Add new Playwright test and update workflow"
-
->>> git pull --rebase origin main
-
-	From https://github.com/MonalishaSahoo03/first_playwright
- 	* branch            main       -> FETCH_HEAD
-	Current branch main is up to date.
-	PS C:\Users\LENOVO\Documents\first_playwright> git push origin main
-
->>>git push origin main 
-	  main -> main
+name: Playwright Tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
