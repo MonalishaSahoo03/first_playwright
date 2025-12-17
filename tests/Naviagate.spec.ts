@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('login to tangerin', async ({ page }) => {
   await page.goto('https://tangerinestaging.ustadmobile.com/#/login');
-  
+
   await page.locator('#username').fill('user1');
   await page.locator('#password').fill('password');
 
@@ -10,4 +10,7 @@ test('login to tangerin', async ({ page }) => {
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Tangerine Editor/);
+
+  await page.locator("(//figure[@class='mat-figure'])[3]").click();
+
 });
